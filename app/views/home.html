@@ -1,0 +1,31 @@
+	<script src="js/responsiveslides.min.js"></script>
+	<script src="js/slideshow.js"></script>
+<!-- Welcome -->
+	<div class="row">
+	  	<div class="col-lg-12">
+	    	<h2>{{ 'TITLE_WELCOME' | translate }}</h2>
+	    	<div ng-bind-html="page['welcome'].text"></div>
+		</div>
+    </div>
+
+	<hr class="featurette-divider">
+		
+	<!-- Example row of columns -->
+	<div class="row">
+		<div class="col-lg-6">
+			<h2>{{ 'TITLE_ABOUT_ISDA' | translate }}</h2>
+			<div ng-bind-html="page['about-isda'].text"></div>
+			<p>
+				<a class="btn btn-primary" href="#" role="button">View details
+					&raquo;</a>
+			</p>
+		</div>
+		<div class="col-lg-6">
+			<h2>{{ 'TITLE_SERVICES' | translate }}</h2>
+			<div ng-bind-html="page['our-services'].text"></div>
+			<p>
+				<a class="btn btn-primary" href="#" role="button">View details
+					&raquo;</a>
+			</p>
+		</div>
+	</div>

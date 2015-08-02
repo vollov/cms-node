@@ -1,6 +1,7 @@
 # Logs
 logs
 *.log
+.settings/
 
 # Runtime data
 pids

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="labApps">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    <title>{{ 'PAGE_TITLE' | translate }}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+	<link href="css/responsiveslides.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/isda.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="container header">
+    	<div class="row header-content">
+	    	<div class="pull-right lang-bar" ng-controller="SettingCtrl">
+				<a ng-click="changeLanguage('en')">English</a> | 
+				<a ng-click="changeLanguage('zh')">中文</a>
+			</div>
+    	</div>
+	</div>
+
+	<div class="container">
+      	<!-- Static navbar -->
+		<nav class="navbar navbar-default" role="navigation">
+        	<div class="container-fluid">
+            	<ul class="nav navbar-nav">
+					<li><a href="#/home">{{ 'MENU_HOME' | translate }}</a></li>
+					<li><a href="#/page/about">{{ 'MENU_ABOUT' | translate }}</a></li>
+              		
+	              	<li class="dropdown">
+	                	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">resources <span class="caret"></span></a>
+	                	<ul class="dropdown-menu" role="menu">
+		                	<li><a href="#/resource/add">add</a></li>
+		                  	<li><a href="#/resources">list</a></li>
+	                	</ul>
+	              	</li>
+            	</ul>
+        	</div><!--/.container-fluid -->
+      	</nav>
+      
+      <div ng-view></div>
+
+	  <hr class="featurette-divider">
+      <!-- Site footer -->
+      <footer class="footer">
+      		<p class="pull-right">
+				<strong>&copy; abc.ca 2015 &nbsp; </strong>
+				<a href="#"><strong>Privacy</strong></a>
+			</p>
+			<p>
+				Designed by abc[a]gmail.com
+			</p>
+      </footer>
+    </div> <!-- /container -->
+
+  <script src="lib/jquery/jquery.js"></script>
+  <script src="lib/angular/angular.js"></script>
+  <script src="lib/angular/angular-resource.js"></script>
+  <script src="lib/angular/angular-cookies.js"></script>
+  <script src="lib/angular/angular-route.js"></script>
+  <script src="lib/angular/angular-translate.min.js"></script>
+  <script src="lib/angular/angular-sanitize.min.js"></script>
+  <script src="lib/angular/ui-bootstrap-tpls.js"></script>
+
+
+
+  <script src="lib/bootstrap/bootstrap.min.js"></script>
+  <script src="lib/underscore/underscore.js"></script>
+
+
+  <script src="js/app.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/services.js"></script>
+  
+  <!-- 
+  <script src="js/demo.js"></script>
+   -->
+  </body>
+</html>

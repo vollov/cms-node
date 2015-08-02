@@ -1,0 +1,134 @@
+front end
+============================================
+
+resource
+
+/api/t/resource/:id [delete,update]
+/api/t/resource [list, add ]
+
+user
+
+/api/t/user/:id [delete,update]
+/api/t/user [list, add ]
+
+login
+/api/login
+
+
+
+
+http://thejackalofjavascript.com/architecting-a-restful-node-js-app/
+
+[] sync/ async functions
+===========================
+
+
+[]Error/exception handing
+===========================
+(short) http://stackoverflow.com/questions/7310521/node-js-best-practice-exception-handling
+(long) https://www.joyent.com/developers/node/design/errors
+
+
+
+https://medium.com/opinionated-angularjs/techniques-for-authentication-in-angularjs-applications-7bbf0346acec
+
+===========================
+
+
+	
+	login : function(req, res) {
+
+		var username = req.body.username || '';
+		var password = req.body.password || '';
+
+		if (username == '' || password == '') {
+			res.status(401);
+			res.json({
+				"status" : 401,
+				"message" : "Invalid credentials"
+			});
+			return;
+		}
+
+		// Fire a query to your DB and check if the credentials are valid
+		var dbUserObj = auth.validate(username, password);
+
+		if (!dbUserObj) { // If authentication fails, we send a 401 back
+			res.status(401);
+			res.json({
+				"status" : 401,
+				"message" : "Invalid credentials"
+			});
+			return;
+		}
+
+		if (dbUserObj) {
+			// If authentication is success, we will generate a token
+			// and dispatch it to the client
+			res.json(genToken(dbUserObj));
+		}
+	},
+			 
+
+	validate : function(username, password) {
+		// spoofing the DB response for simplicity
+		var dbUserObj = { // spoofing a userobject from the DB.
+			name : 'arvind',
+			role : 'admin',
+			username : 'arvind@myapp.com'
+		};
+
+		return dbUserObj;
+	},
+	
+	
+		
+	/** 
+	 * login logic:
+	 * 		if db has email and password:
+	 *			generate token id and send back
+	 * 		else:
+	 *			return 401 and error message
+	 */
+	app.post('/login', function(req, res){
+//		console.log('getting credential from login = %j', req.body)
+		var username = req.body.username;
+		var password = req.body.password;
+		db.findOne('user', {'email': username}, {'password':1}, function(err, user){
+//			console.log('findOne return a user = %j', user);
+			if(!err) {
+				if(user == null){
+					// console.log('user not in db');
+					return res.send(401, { message : 'user name is not existing' });
+				}else{
+					if(security.hash(password) == user['password']) {
+						var uuid = security.uuid();
+						var token_id = security.hash(username + uuid);
+//						console.log('return token:' + token_id);
+						
+						var record = [token_id, 'username', username, 'role', user['role']];
+						redisService.save(token_id, record, function(err, reply){
+							console.log(reply.toString());
+						});
+						return res.send(200, { tokenid : token_id});
+					}else{
+						return res.send(401, { message : 'incorrect password' });
+					}
+				}
+			} else {
+				return res.send(500, { message : 'Error when querying database' });
+			}
+		});
+	});
+	
+	app.get('/api/logout', function(req, res){
+		var tokenid = req.query.tid;
+		redisService.remove(tokenid, function(err, reply){
+			console.log(reply.toString());
+		});
+		return res.send(200, { message : 'logged out' });
+	});
+	
+	app.get('/public/routes', function(req, res){
+		return res.send(200, {routes: ['/','/login','/logout','/postcodes','/about']});
+	});

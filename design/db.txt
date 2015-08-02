@@ -1,0 +1,35 @@
+CREATE DATABASE cms CHARACTER SET utf8 COLLATE utf8_bin;
+
+CREATE DATABASE cms_test CHARACTER SET utf8 COLLATE utf8_bin;
+
+SHOW CREATE TABLE page_page\G;
+SHOW CREATE TABLE page_tpage\G;
+SHOW CREATE TABLE page_content\G;
+SHOW CREATE TABLE page_tcontent\G;
+
+
+mysql> desc page_page;
++--------+--------------+------+-----+---------+----------------+
+| Field  | Type         | Null | Key | Default | Extra          |
++--------+--------------+------+-----+---------+----------------+
+| id     | int(11)      | NO   | PRI | NULL    | auto_increment |
+| title  | varchar(150) | NO   | UNI | NULL    |                |
+| slug   | varchar(150) | NO   | UNI | NULL    |                |
+| posted | datetime     | NO   | MUL | NULL    |                |
+| active | tinyint(1)   | NO   |     | NULL    |                |
++--------+--------------+------+-----+---------+----------------+
+
+mysql> desc page_content;
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| id      | int(11)      | NO   | PRI | NULL    | auto_increment |
+| code    | varchar(150) | NO   | UNI | NULL    |                |
+| posted  | datetime     | NO   | MUL | NULL    |                |
+| page_id | int(11)      | NO   | MUL | NULL    |                |
+| active  | tinyint(1)   | NO   |     | NULL    |                |
+| slug    | varchar(150) | NO   | UNI | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+6 rows in set (0.01 sec)
+
+

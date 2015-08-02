@@ -1,0 +1,21 @@
+<div>
+   
+	<table class="table table-condensed table-bordered table-hover">
+		<thead>
+			<tr>
+				<th> id </th>
+				<th>email</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-class-even="'even'" ng-class='{selected: $index==selectedRow}' ng-click='selectResource($index)' ng-repeat="resource in resources">
+				<td>{{resource.id}}</td>
+				<td>{{resource.code}}</td>
+				<td><a class="btn btn-primary" href="#/resource/{{resource.id}}" ng-class="{disabled: index < 0}">Edit</a></td>
+				<td><a class="btn btn-primary" ng-click="deleteResource(resource, $index)" ng-class="{disabled: index < 0}">delete</a></td>
+			<tr>
+		</tbody>
+	</table>
+</div>
