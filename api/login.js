@@ -27,7 +27,7 @@ module.exports = function(app) {
 	/**
 	 * login function
 	 */
-	app.get('/api/login', function(req, res) {
+	app.post('/api/login', function(req, res) {
 		 var email = req.body.email || '';
 		 var password = req.body.password || '';
 		  
