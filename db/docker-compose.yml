@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  mongo-db:
+    image: mongo:latest
+    container_name: mongo-db
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    volumes:
+      - type: bind
+        source: /docker/mongo/data
+        target: /data/mongo
+      - type: bind
+        source: /docker/mongo/db
+        target: /data/db
+    # HOST_PORT:CONTAINER_PORT
+    ports:
+      - "27010:27017"
+    networks:
+      - app-network
+
+  redis-cache:
+    container_name: redis-cache
+    image: redis:alpine
+    ports:
+      - "6378:6379"
+
+    volumes:
+      - type: bind
+        source: /docker/redis
+        target: /var/redis
+      - type: bind
+        source: /docker/redis/etc/redis.conf
+        target: /usr/local/etc/redis/redis.conf
+
+    environment:
+      - REDIS_REPLICATION_MODE=master
+
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

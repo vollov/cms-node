@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  snover:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nodejs
+    container_name: snover
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_HOSTNAME=mongo-db
+      - MONGO_PORT=$MONGO_PORT
+      - MONGO_DB=$MONGO_DB
+    ports:
+      - "6001:7001"
+    volumes:
+      - .:/home/node/app
+      - node_modules:/home/node/app/node_modules
+      - type: bind
+        source: /docker/stock
+        target: /docker/stock
+
+networks:
+  default:
+    external:
+      name: db_app-network
+
+volumes:
+  node_modules:
