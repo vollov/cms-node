@@ -1,6 +1,15 @@
 import { Message } from '../models/message'
 import { DATABASE_ERROR } from '../lib/codes'
 import log from '../lib/logger'
+import nodemailer from 'nodemailer'
+
+const {
+	SMTP_HOST,
+	// SMTP_PORT,
+	SMTP_USERNAME,
+	SMTP_PASSWORD,
+	CONTACT_EMAIL
+} = process.env
 
 /**
  * Note:
@@ -31,11 +40,42 @@ const list = async (uid) => {
 	}
 }
 
-const add = async (data) => {
+const add = async (user, msg) => {
 	try{
-		return await new Message(data).save()
+		const message = {...msg, user: user.id}
+
+		// save message to db
+		// const message = await new Message(data).save()
+
+		// send message via node mailer
+		let mail = {
+			from: user.eamil,
+			to: CONTACT_EMAIL,
+			subject: msg.title,
+			text: msg.content
+			// html: `<b>${msg.content}</b>`
+		}
+
+		log.info(`Mail sent: ${JSON.stringify(mail)}`)
+
+
+		let transporter = nodemailer.createTransport({
+			host: SMTP_HOST,
+			// port: SMTP_PORT,
+			secure: false, // true for 465, false for other ports
+			auth: {
+				user: SMTP_USERNAME, // generated ethereal user
+				pass: SMTP_PASSWORD, // generated ethereal password
+			},
+		});
+
+		let info = await transporter.sendMail(mail);
+
+		log.info(`Message sent: ${info.messageId}`)
+
+		return {nessageId: info.messageId }
 	} catch(err){
-		log.error(`add message error: ${err}`)
+		log.error(`send message error: ${err}`)
 		throw new Error(DATABASE_ERROR)
 	}
 }

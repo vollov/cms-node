@@ -33,8 +33,10 @@ router.get('/user/:uid', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
+    const user = req.user
+
     try {
-        const data = await add(req.body)
+        const data = await add(user, req.body)
         return res.status(200).json(data)
     } catch (err) {
         return res.status(500).json(err)
