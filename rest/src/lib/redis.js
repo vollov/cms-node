@@ -2,7 +2,7 @@ import Redis from 'ioredis'
 // import dotenv  from "dotenv"
 // dotenv.config()
 const {
-  REDIS_SECRET
+	REDIS_SECRET
 } = process.env
 
 const redis = new Redis({ password: REDIS_SECRET })

@@ -7,6 +7,9 @@ import { UNAUTHORIZED, UNAUTHORIZED_REQUEST } from '../lib/codes'
 
 const router = express.Router()
 
+router.get('/foo', (req, res) => {
+	return res.status(200).json({ msg: 'greeting'})
+})
 /**
  * Mockup function to test user login
  */

@@ -4,7 +4,8 @@ import _ from 'lodash'
 const whiteTable = {
 	GET: [
 		/\/api\/auth\/google\/login\/*/,
-		/\/api\/pages\/*/
+		/\/api\/pages\/*/,
+		/\/api\/auth\/foo/
 	],
 	POST: [/\/api\/auth\/login/]
 }

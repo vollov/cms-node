@@ -9,8 +9,11 @@ const router = express.Router()
  * Note: Errors were handled and logged in service layer
  */
 
-router.get('/:id',  async (req, res) => {
-    const uid = req.params.id
+/**
+ * find message by id
+ */
+router.get('/:id', async (req, res) => {
+    const id = req.params.id
     try {
         const data = await find(id)
         return res.status(200).json(data)
@@ -20,7 +23,7 @@ router.get('/:id',  async (req, res) => {
 })
 
 /**
- * find one by key
+ * find one by user
  */
 router.get('/user/:uid', async (req, res) => {
     const uid = req.params.uid
